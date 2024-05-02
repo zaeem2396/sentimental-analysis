@@ -1,1 +1,1 @@
-# snetimental-analysis
+# sentimental-analysis
