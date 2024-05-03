@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  node:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: pool
+      MYSQL_PASSWORD: analysis
+      MYSQL_DATABASE: sentiment  
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: analysis
+      MYSQL_DATABASE: sentiment 
+      MYSQL_USER: pool
+      MYSQL_PASSWORD: analysis
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1    
