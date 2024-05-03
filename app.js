@@ -6,7 +6,7 @@ const app = express()
 
 // Create a route
 app.get('/', (req, res) => {
-    res.send('Hello World!!');
+    res.send('Hello World!');
 });
 
 // Start server
