@@ -1,13 +1,11 @@
 require('dotenv').config()
 const express = require('express')
-const { con } = require('./config/db');
-
 const app = express()
+app.use(express.json());
 
-// Create a route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const userRoutes = require('./routes/UserRoutes')
+app.use('/sentimental-analysis/api', userRoutes)
+app.get('/', (req, res) => { res.send('Hello World!!') });
 
 // Start server
 const PORT = process.env.PORT || 3000;
