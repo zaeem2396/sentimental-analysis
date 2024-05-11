@@ -40,6 +40,21 @@ class Auth {
         }
     }
 
+    async profile(id) {
+        try {
+            const [checkIfUserExist, _] = await con.execute('SELECT * FROM user WHERE id = ?', [id])
+            if (checkIfUserExist.length > 0) {
+                delete checkIfUserExist[0].password
+                return { code: 200, message: 'success', data: checkIfUserExist[0] }
+            } else {
+                return { code: 404, message: 'user not found' }
+            }
+        } catch (error) {
+            // throw error
+            return { code: 500, message: 'system error occured', more_info: error }
+        }
+    }
+
     generateToken = (authUser) => {
         return jwt.sign(authUser, process.env.JWT_SECRET, { expiresIn: '1h' });
     }
