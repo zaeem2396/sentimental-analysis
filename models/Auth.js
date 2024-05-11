@@ -50,7 +50,23 @@ class Auth {
                 return { code: 404, message: 'user not found' }
             }
         } catch (error) {
-            // throw error
+            return { code: 500, message: 'system error occured', more_info: error }
+        }
+    }
+
+    async update(id, name, email, password) {
+        try {
+            const [checkIfUserExist, _] = await con.execute('SELECT * FROM user WHERE id = ?', [id])
+            if (checkIfUserExist.length > 0) {
+                const hashPassword = await bcrypt.hash(password, 10)
+                const [updateUser, _] = await con.execute('UPDATE user SET name = ?, email = ?, password = ? WHERE id = ?', [name, email, hashPassword, id])
+                if (updateUser) {
+                    return { code: 200, message: 'user updated successfully' }
+                }
+            } else {
+                return { code: 404, message: 'user not found' }
+            }
+        } catch (error) {
             return { code: 500, message: 'system error occured', more_info: error }
         }
     }

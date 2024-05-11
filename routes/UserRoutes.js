@@ -5,6 +5,7 @@ const verifyToken = require('../middleware/verifyJWTtoken')
 
 route.post('/create', auth.createUser)
 route.post('/login', auth.loginUser)
-route.post('/profile', verifyToken, auth.getProfile)
+route.get('/profile', verifyToken, auth.getProfile)
+route.patch('/update', verifyToken, auth.updateProfile)
 
 module.exports = route

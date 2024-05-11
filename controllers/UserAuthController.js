@@ -1,5 +1,4 @@
 const auth = require('../models/Auth');
-// const jwt = require('jsonwebtoken');
 const decodeJWTToken = require('../utils/jwt');
 
 class UserAuthController {
@@ -9,8 +8,7 @@ class UserAuthController {
             const createUserResponse = await auth.register(name, email, password);
             res.json({ response: createUserResponse });
         } catch (error) {
-            // console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
         }
     }
 
@@ -20,8 +18,7 @@ class UserAuthController {
             const loginUserResponse = await auth.login(email, password);
             res.json({ response: loginUserResponse });
         } catch (error) {
-            // console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
         }
     }
 
@@ -33,8 +30,20 @@ class UserAuthController {
             const profileResponse = await auth.profile(data.id);
             res.json({ response: profileResponse });
         } catch (error) {
-            // console.log(error);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+        }
+    }
+
+    async updateProfile(req, res) {
+        try {
+            const { name, email, password } = req.body;
+            const authHeader = req.headers.authorization;
+            const token = authHeader.split(" ")[1];
+            const data = await decodeJWTToken(token) // Decode the id of user
+            const updateProfileResponse = await auth.update(data.id, name, email, password);
+            res.json({ response: updateProfileResponse });
+        } catch (error) {
+            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
         }
     }
 }
