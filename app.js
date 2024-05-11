@@ -4,7 +4,7 @@ const app = express()
 app.use(express.json());
 
 const userRoutes = require('./routes/UserRoutes')
-app.use('/sentimental-analysis/api', userRoutes)
+app.use('/sentimental-analysis/api/user', userRoutes)
 app.get('/', (req, res) => { res.send('Hello World!!') });
 
 // Start server
