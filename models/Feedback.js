@@ -16,7 +16,7 @@ class Feedback {
 
     async getFeedback() {
         try {
-            const [feedback, _] = await con.execute('SELECT * FROM feedback ORDER BY id DESC')
+            const [feedback, _] = await con.execute('SELECT u.name as contomer_name, f.content as feedback, f.created_at as created FROM feedback as f INNER JOIN user as u ON u.id=f.user_id ORDER BY f.id DESC')
             if (feedback) {
                 return { code: 200, message: 'success', data: feedback }
             } else {
