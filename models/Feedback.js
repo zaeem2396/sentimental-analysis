@@ -13,6 +13,19 @@ class Feedback {
             return { code: 500, message: 'system error occured', more_info: error }
         }
     }
+
+    async getFeedback() {
+        try {
+            const [feedback, _] = await con.execute('SELECT * FROM feedback ORDER BY id DESC')
+            if (feedback) {
+                return { code: 200, message: 'success', data: feedback }
+            } else {
+                return { code: 404, message: 'No data found' }
+            }
+        } catch (error) {
+            return { code: 500, message: 'system error occured', more_info: error }
+        }
+    }
 }
 
 module.exports = new Feedback()
