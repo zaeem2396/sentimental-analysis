@@ -40,7 +40,6 @@ class FeedbackController {
             res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
         }
     }
-
 }
 
 module.exports = new FeedbackController()
