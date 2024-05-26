@@ -2,6 +2,54 @@ const auth = require('../models/Auth');
 const decodeJWTToken = require('../utils/jwt');
 
 class UserAuthController {
+
+    /**
+     * @swagger
+     * /sentimental-analysis/api/user/create:
+     *   post:
+     *     summary: Create a new user
+     *     tags:
+     *       - Users
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - name
+     *               - email
+     *               - password
+     *             properties:
+     *               name:
+     *                 type: string
+     *               email:
+     *                 type: string
+     *                 format: email
+     *               password:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: User created successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 response:
+     *                   type: object
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async createUser(req, res) {
         try {
             const { name, email, password } = req.body;
@@ -12,6 +60,50 @@ class UserAuthController {
         }
     }
 
+    /**
+     * @swagger
+     * /sentimental-analysis/api/user/login:
+     *   post:
+     *     summary: User login
+     *     tags:
+     *       - Users
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - email
+     *               - password
+     *             properties:
+     *               email:
+     *                 type: string
+     *                 format: email
+     *               password:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: login successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 response:
+     *                   type: object
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async loginUser(req, res) {
         try {
             const { email, password } = req.body;
@@ -22,6 +114,39 @@ class UserAuthController {
         }
     }
 
+
+    /**
+     * @swagger
+     * /sentimental-analysis/api/user/profile:
+     *   get:
+     *     summary: Retrieve the user's profile
+     *     tags:
+     *       - Users
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: Success
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 response:
+     *                   type: object
+     *                   description: User profile information
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async getProfile(req, res) {
         try {
             const authHeader = req.headers.authorization;
@@ -34,6 +159,55 @@ class UserAuthController {
         }
     }
 
+    /**
+     * @swagger
+     * /sentimental-analysis/api/user/update:
+     *   patch:
+     *     summary: Update an existing user
+     *     tags:
+     *       - Users
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - name
+     *               - email
+     *               - password
+     *             properties:
+     *               name:
+     *                 type: string
+     *               email:
+     *                 type: string
+     *                 format: email
+     *               password:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: User updated successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 response:
+     *                   type: object
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async updateProfile(req, res) {
         try {
             const { name, email, password } = req.body;

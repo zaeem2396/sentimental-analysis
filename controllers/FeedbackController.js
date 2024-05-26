@@ -35,12 +35,11 @@ class FeedbackController {
             const startIndex = (page - 1) * 10;
             const endIndex = Math.min(startIndex + 10, feedbacks.length);
 
-            res.json({ page_no: page, total: pageCount, total_data: feedbacks.length, response: feedbacks.slice(startIndex, endIndex) });
+            res.status(200).json({ page_no: page, total: pageCount, total_data: feedbacks.length, response: feedbacks.slice(startIndex, endIndex) });
         } catch (error) {
             res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
         }
     }
-
 }
 
 module.exports = new FeedbackController()
