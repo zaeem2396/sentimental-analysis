@@ -4,47 +4,47 @@ const decodeJWTToken = require('../utils/jwt');
 class FeedbackController {
 
     /**
-         * @swagger
-         * /sentimental-analysis/api/feedback/create:
-         *   post:
-         *     summary: Feedback submitted successfully
-         *     tags:
-         *       - Feedback
-         *     security:
-         *       - bearerAuth: []
-         *     requestBody:
-         *       required: true
-         *       content:
-         *         application/json:
-         *           schema:
-         *             type: object
-         *             required:
-         *               - content
-         *             properties:
-         *               content:
-         *                 type: string
-         *     responses:
-         *       200:
-         *         description: Feedback submitted successfully
-         *         content:
-         *           application/json:
-         *             schema:
-         *               type: object
-         *               properties:
-         *                 response:
-         *                   type: object
-         *       500:
-         *         description: Internal Server Error
-         *         content:
-         *           application/json:
-         *             schema:
-         *               type: object
-         *               properties:
-         *                 message:
-         *                   type: string
-         *                 error:
-         *                   type: string
-         */
+     * @swagger
+     * /sentimental-analysis/api/feedback/create:
+     *   post:
+     *     summary: Feedback submitted successfully
+     *     tags:
+     *       - Feedback
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - content
+     *             properties:
+     *               content:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: Feedback submitted successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 response:
+     *                   type: object
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async create(req, res) {
         try {
             const { content } = req.body
