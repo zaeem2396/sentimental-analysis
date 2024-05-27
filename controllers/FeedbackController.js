@@ -2,6 +2,49 @@ const feedback = require('../models/Feedback');
 const decodeJWTToken = require('../utils/jwt');
 
 class FeedbackController {
+
+    /**
+         * @swagger
+         * /sentimental-analysis/api/feedback/create:
+         *   post:
+         *     summary: Feedback submitted successfully
+         *     tags:
+         *       - Feedback
+         *     security:
+         *       - bearerAuth: []
+         *     requestBody:
+         *       required: true
+         *       content:
+         *         application/json:
+         *           schema:
+         *             type: object
+         *             required:
+         *               - content
+         *             properties:
+         *               content:
+         *                 type: string
+         *     responses:
+         *       200:
+         *         description: Feedback submitted successfully
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 response:
+         *                   type: object
+         *       500:
+         *         description: Internal Server Error
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 message:
+         *                   type: string
+         *                 error:
+         *                   type: string
+         */
     async create(req, res) {
         try {
             const { content } = req.body
@@ -16,6 +59,63 @@ class FeedbackController {
         }
     }
 
+    /**
+     * @swagger
+     * /sentimental-analysis/api/feedback/getFeedback:
+     *   get:
+     *     summary: Retrieve feedback
+     *     tags:
+     *       - Feedback
+     *     parameters:
+     *       - in: query
+     *         name: p
+     *         schema:
+     *           type: integer
+     *           default: 1
+     *         description: Page number
+     *     responses:
+     *       200:
+     *         description: Successful response
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 page_no:
+     *                   type: integer
+     *                 total:
+     *                   type: integer
+     *                 total_data:
+     *                   type: integer
+     *                 response:
+     *                   type: array
+     *                   items:
+     *                     type: object
+     *                     properties:
+     *                       // Define properties of feedback item here
+     *       400:
+     *         description: Invalid page number or data not available
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 code:
+     *                   type: integer
+     *                 message:
+     *                   type: string
+     *       500:
+     *         description: Internal Server Error
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 error:
+     *                   type: string
+     */
     async get(req, res) {
         try {
             const feedbackData = await feedback.getFeedback();

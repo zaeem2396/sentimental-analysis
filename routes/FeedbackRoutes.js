@@ -4,6 +4,6 @@ const feedback = require('../controllers/FeedbackController');
 const verifyToken = require('../middleware/verifyJWTtoken');
 
 route.post('/create', verifyToken, feedback.create)
-route.get('/feedback', feedback.get)
+route.get('/getFeedback', feedback.get)
 
 module.exports = route
