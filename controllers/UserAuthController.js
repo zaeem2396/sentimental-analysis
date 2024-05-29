@@ -1,5 +1,6 @@
 const auth = require('../models/Auth');
 const decodeJWTToken = require('../utils/jwt');
+const m = require('../utils/message')
 
 class UserAuthController {
 
@@ -56,7 +57,7 @@ class UserAuthController {
             const createUserResponse = await auth.register(name, email, password);
             res.json({ response: createUserResponse });
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 
@@ -110,7 +111,7 @@ class UserAuthController {
             const loginUserResponse = await auth.login(email, password);
             res.json({ response: loginUserResponse });
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 
@@ -155,7 +156,7 @@ class UserAuthController {
             const profileResponse = await auth.profile(data.id);
             res.json({ response: profileResponse });
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 
@@ -217,7 +218,7 @@ class UserAuthController {
             const updateProfileResponse = await auth.update(data.id, name, email, password);
             res.json({ response: updateProfileResponse });
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 }
