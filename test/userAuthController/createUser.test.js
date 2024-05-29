@@ -1,9 +1,9 @@
-const UserAuthController = require('../controllers/UserAuthController')
-const auth = require('../models/Auth')
+const UserAuthController = require('../../controllers/UserAuthController')
+const auth = require('../../models/Auth')
 const httpMocks = require('node-mocks-http')
-const m = require('../utils/message')
+const m = require('../../utils/message')
 
-jest.mock('../models/Auth')
+jest.mock('../../models/Auth')
 
 describe('UserAuthController.createUser', () => {
     it('should return 200 and create user response on successful user creation', async () => {
