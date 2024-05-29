@@ -1,5 +1,6 @@
 const feedback = require('../models/Feedback');
 const decodeJWTToken = require('../utils/jwt');
+const m = require('../utils/message')
 
 class FeedbackController {
 
@@ -55,7 +56,7 @@ class FeedbackController {
             const newFeedback = await feedback.createFeedback(userId, content)
             res.json({ response: newFeedback })
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 
@@ -129,7 +130,7 @@ class FeedbackController {
             let page = parseInt(req.query.p || 1);
 
             if (page < 1 || page > pageCount) {
-                res.status(400).json({ code: 200, message: 'Invalid page number or data not available' });
+                res.status(400).json({ code: 200, message: m.feedback.invalid_page });
             }
 
             const startIndex = (page - 1) * 10;
@@ -137,7 +138,7 @@ class FeedbackController {
 
             res.status(200).json({ page_no: page, total: pageCount, total_data: feedbacks.length, response: feedbacks.slice(startIndex, endIndex) });
         } catch (error) {
-            res.status(500).json({ message: 'Internal Server Error', error: `${error}` });
+            res.status(500).json({ message: m.default.server_error, error: `${error}` });
         }
     }
 }

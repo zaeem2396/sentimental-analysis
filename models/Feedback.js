@@ -1,5 +1,6 @@
 const { con } = require('../config/db')
 const Sentiment = require('sentiment');
+const m = require('../utils/message')
 const sentiment = new Sentiment();
 
 class Feedback {
@@ -7,12 +8,12 @@ class Feedback {
         try {
             const [feedback, _] = await con.execute('INSERT INTO feedback (user_id, content) VALUES (?,?)', [userId, content])
             if (feedback) {
-                return { code: 200, message: 'Feedback submitted successfully' }
+                return { code: 200, message: m.feedback.feedback_submitted }
             } else {
-                return { code: 500, message: 'Something went wrong' }
+                return { code: 500, message: m.feedback.something_went_wrong }
             }
         } catch (error) {
-            return { code: 500, message: 'system error occured', more_info: error }
+            return { code: 500, message: m.default.system_error, more_info: error }
         }
     }
 
@@ -24,12 +25,12 @@ class Feedback {
                     const result = sentiment.analyze(element.feedback);
                     element.sentiment_score = result.score
                 });
-                return { code: 200, message: 'success', data: feedback }
+                return { code: 200, message: m.default.success, data: feedback }
             } else {
-                return { code: 404, message: 'No data found' }
+                return { code: 404, message: m.default.no_data_found }
             }
         } catch (error) {
-            return { code: 500, message: 'system error occured', more_info: error }
+            return { code: 500, message: m.default.system_error, more_info: error }
         }
     }
 }
